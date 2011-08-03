@@ -1,19 +1,42 @@
 = typed-array
 
-Description goes here.
+Gem provides enforced-type functionality to Arrays
 
-== Contributing to typed-array
+Copyright (c) 2011 Ryan Biesemeyer
+See LICENSE.txt for details
+
+Ryan Biesemeyer mailto:ruby-dev@yaauie.com
+
+== Example
+
+=== Create Standard Class
+
+ require 'typed-array'
+ class Things < Array
+   extend TypedArray
+   restrict_types Thing1,Thing2
+ end
  
-* Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
-* Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it
-* Fork the project
-* Start a feature/bugfix branch
-* Commit and push until you are happy with your contribution
-* Make sure to add tests for it. This is important so I don't break it in a future version unintentionally.
-* Please try not to mess with the Rakefile, version, or history. If you want to have your own version, or is otherwise necessary, that is fine, but please isolate to its own commit so I can cherry-pick around it.
+=== Generate Class using Factory
+ 
+ require 'typed-array'
+ things = TypedArray(Thing1,Thing2)
 
-== Copyright
-
-Copyright (c) 2011 Ryan Biesemeyer. See LICENSE.txt for
-further details.
+=== Adding items to the Array
+ 
+ # All standard Array interfaces are implemented, including block-processing
+ # and variable-number of arguments. For methods that would usually return an
+ # Array, they instead return an instance of the current class (except to_a).
+ #
+ # The difference is that if the method would generate an Array including the
+ # wrong types, TypedArray::UnexpectedTypeException is raised and the call is
+ # aborted before modifying the enforced TypedArray instance.
+ 
+ require 'typed-array'
+ symbols = TypedArray(Symbol).new([:foo,:bar,:baz,:bingo])
+ begin
+   integers = TypedArray(Integer).new([1,3,7,2,:symbol])
+ rescue TypedArray::UnexpectedTypeException
+   puts "An error occured: #{$!}"
+ end
 

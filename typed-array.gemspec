@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{typed-array}
-  s.version = "0.1.0"
+  s.version = "0.1.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = [%q{Ryan Biesemeyer}]
@@ -50,7 +50,8 @@ Gem::Specification.new do |s|
     "lib/typed-array/.DS_Store",
     "lib/typed-array/functions.rb",
     "spec/spec_helper.rb",
-    "spec/typed-array_spec.rb"
+    "spec/typed-array_spec.rb",
+    "typed-array.gemspec"
   ]
   s.homepage = %q{http://github.com/yaauie/typed-array}
   s.licenses = [%q{MIT}]
