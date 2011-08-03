@@ -18,7 +18,29 @@ Jeweler::Tasks.new do |gem|
   gem.homepage = "http://github.com/yaauie/typed-array"
   gem.license = "MIT"
   gem.summary = %Q{Provides methods for creating type-enforced Arrays}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.description =<<-DESCRIPTION
+      All methods that alter the contents of an array that implements this Gem are first checked to
+      ensure that the added items are of the types allowed. All methods behave exactly as their Array
+      counterparts, including additional forms, block processing, etc.
+
+      Defining a TypedArray Class:
+
+      ```ruby
+      class ThingsArray < Array
+        extend TypedArray
+        restrict_types Thing1, Thing2
+      end
+
+      things = ThingsArray.new
+      ```
+
+      Generating a single TypedArray
+      
+      ```ruby
+      things = TypedArray(Thing1,Thing2).new
+
+      These classes can be extended, and their accepted-types appended to after their initial definition.
+    DESCRIPTION
   gem.email = "ruby-dev@yaauie.com"
   gem.authors = ["Ryan Biesemeyer"]
   # dependencies defined in Gemfile
