@@ -1,24 +1,48 @@
+# = typed-array - Gemp provides enforced-type functionality to Arrays
+# 
+# Copyright (c) 2011 Ryan Biesemeyer
+# See LICENSE.txt for details
+# 
+# Ryan Biesemeyer mailto:ruby-dev@yaauie.com
+# 
+# == Example
+# 
+# === Create Standard Class
+# 
+#  require 'typed-array'
+#  class Things < Array
+#    extend TypedArray
+#    restrict_types Thing1,Thing2
+#  end
+#  
+# === Generate Class using Factory
+#  
+#  require 'typed-array'
+#  things = TypedArray(Thing1,Thing2)
+# 
+# === Adding items to the Array
+#  
+#  # All standard Array interfaces are implemented, including block-processing
+#  # and variable-number of arguments. For methods that would usually return an
+#  # Array, they instead return an instance of the current class (except to_a).
+#  #
+#  # The difference is that if the method would generate an Array including the
+#  # wrong types, TypedArray::UnexpectedTypeException is raised and the call is
+#  # aborted before modifying the enforced TypedArray instance.
+#  
+#  require 'typed-array'
+#  symbols = TypedArray(Symbol).new([:foo,:bar,:baz,:bingo])
+#  begin
+#    integers = TypedArray(Integer).new([1,3,7,2,:symbol])
+#  rescue TypedArray::UnexpectedTypeException
+#    puts "An error occured: #{$!}"
+#  end
+# 
+
 require "typed-array/functions"
 
-# This module is useful for creating Array subclasses that enforce
-# the types of objects it acepts.
-# 
-# There are two general forms:
-#
-# class Things < Array
-#   extend TypedArray
-#   restricted_types Thing1, Thing2
-#   # ...
-# end
-# things = Things.new()
-# 
-# or
-# 
-# things = TypedArray(Thing1,Thing2).new
-#
-# We attempt to ensure that validation occurs *before* any changes are made
-# to the TypedArray in question. 
-# If validation fails, TypedArray::UnexpectedTypeException is raised.
+# Provides TypedArray functionality to a subclass of Array
+# when extended in the class's definiton
 module TypedArray
 
   # Hook the extension process in order to include the necessary functions
@@ -53,7 +77,9 @@ module TypedArray
     @_restricted_types
   end; alias :restricted_type :restricted_types
 
+  # The exception that is raised when an Unexpected Type is reached during validation
   class UnexpectedTypeException < Exception
+    # Provide access to the types of objects expected and the class of the object received
     attr_reader :expected, :received
 
     def initialize expected_one_of, received
@@ -75,8 +101,8 @@ module TypedArray
     
 end
 
-# Provide a factory
-#
+# Provide a factory method. Takes any number of types to accept as arguments
+# and returns a class that behaves as a type-enforced array.
 def TypedArray *types_allowed
   klass = Class.new( Array )
   klass.class_exec(types_allowed) do |types_allowed|
