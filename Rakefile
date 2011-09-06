@@ -43,6 +43,7 @@ Jeweler::Tasks.new do |gem|
     DESCRIPTION
   gem.email = "ruby-dev@yaauie.com"
   gem.authors = ["Ryan Biesemeyer"]
+  gem.add_development_dependency("rdoc", "~> 3.9")
 end
 Jeweler::RubygemsDotOrgTasks.new
 
@@ -59,7 +60,7 @@ end
 
 task :default => :spec
 
-require 'rake/rdoctask'
+require 'rdoc/task'
 Rake::RDocTask.new do |rdoc|
   version = File.exist?('VERSION') ? File.read('VERSION') : ""
 
