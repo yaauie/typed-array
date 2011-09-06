@@ -43,7 +43,6 @@ Jeweler::Tasks.new do |gem|
     DESCRIPTION
   gem.email = "ruby-dev@yaauie.com"
   gem.authors = ["Ryan Biesemeyer"]
-  # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new
 
