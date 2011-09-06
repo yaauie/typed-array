@@ -1,6 +1,5 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
-
 # We need to test in several different contexts, so provide the base info here.
 inputs = {
   [Symbol]=>{
@@ -23,7 +22,7 @@ inputs = {
     :base => ['Foo',:foo],
     :match => [:bar,'Bar'],
     :fail => {
-      :one => [:yippee,'a stirng',17],
+      :one => [:yippee,'a string',17],
       :all => [12,Class,Array]
     }
   }
@@ -34,14 +33,17 @@ describe TypedArray do
     inputs.each_pair do |accepted_types, config|
       context "when only accepting <#{accepted_types.inspect}>" do
         subject { TypedArray( *accepted_types ) }
+
         context 'Form 1: typed_ary.new()' do
           it "should have zero-length" do
             subject.new().length.should == 0
           end
+
           it "should be empty" do
             subject.new().to_a.should be_empty
           end
         end
+
         context 'Form 1: typed_ary.new(size)' do
           it "should have the proper length" do
             subject.new(5).length.should == 5
@@ -51,6 +53,7 @@ describe TypedArray do
             subject.new(5).to_a.should == [nil,nil,nil,nil,nil]
           end
         end
+
         context 'Form 2: typed_ary.new(size,object)' do
           it "should have the proper length" do
             subject.new(3,config[:match].first).length.should == 3
@@ -64,17 +67,21 @@ describe TypedArray do
             expect{ subject.new( 3, config[:fail][:all].first ) }.to raise_error TypedArray::UnexpectedTypeException
           end
         end
+
         context 'Form 3: typed_ary.new( ary )' do
           it "should accept when all items match" do
             subject.new(config[:match]).to_a.should == config[:match]
           end
+
           it "should raise when one object is the wrong type" do
             expect{ subject.new(config[:fail][:one])}.to raise_error TypedArray::UnexpectedTypeException
           end
+
           it "should raise when more than one object is the wrong type" do
             expect{ subject.new(config[:fail][:all])}.to raise_error TypedArray::UnexpectedTypeException
           end
         end
+
         context 'Form 4: typed_ary.new(size){|index|block}' do
           it "should populate when block returns the right type" do
             subject.new(config[:match].length){|i| config[:match][i]}.to_a.should == config[:match]
@@ -105,7 +112,7 @@ describe TypedArray do
             before :each do
               @item = config[:match].first
             end
-            
+
             it "should return as Array would return" do
               @typed_ary.send(method,@item).to_a.should == @ary.send(method,@item)
             end
@@ -121,9 +128,8 @@ describe TypedArray do
             before :each do
               @item = config[:fail][:all].first
             end
-            
-            it "should raise an exception" do
 
+            it "should raise an exception" do
               expect{ @typed_ary.send(method,@item) }.to raise_error TypedArray::UnexpectedTypeException
             end
 
@@ -136,7 +142,6 @@ describe TypedArray do
                 @typed_ary.to_a.should == backup
               end
             end
-            
           end
         end
       end
@@ -156,7 +161,7 @@ describe TypedArray do
             before :each do
               @item = config[:match].first
             end
-            
+
             it "should return as Array would return" do
               @typed_ary.send(method,4,@item).should == @ary.send(method,4,@item)
             end
@@ -172,7 +177,7 @@ describe TypedArray do
             before :each do
               @item = config[:fail][:all].first
             end
-            
+
             it "should raise an exception" do
 
               expect{ @typed_ary.send(method,4,@item) }.to raise_error TypedArray::UnexpectedTypeException
@@ -187,13 +192,11 @@ describe TypedArray do
                 @typed_ary.to_a.should == backup
               end
             end
-            
           end
         end
       end
     end
   end
-
 
   [:+,:&,:concat,:replace].each do |method|
     context %Q{typed_ary#{('a'..'z').include?(method.to_s[0]) ? '.' : ' '}#{method.to_s} other_ary} do
@@ -230,6 +233,7 @@ describe TypedArray do
                   expect{ @typed_ary.send(method,@other_ary) }.to raise_error TypedArray::UnexpectedTypeException
                 end
               end
+
               it "should not modify the TypedArray" do
                 begin
                   backup = @typed_ary.to_a
@@ -241,7 +245,7 @@ describe TypedArray do
               end
             end
           end
-        end          
+        end
       end
     end
   end
@@ -262,13 +266,12 @@ describe TypedArray do
         @extension.restricted_types.should include(Fixnum)
       end
     end
+
     context 'when adding restricted_type to the child' do
       it 'should not propogate to the parent' do
         @extension.restricted_type Fixnum
         @base.restricted_types.should_not include(Fixnum)
       end
     end
-    
-
   end
 end

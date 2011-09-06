@@ -35,7 +35,7 @@ Jeweler::Tasks.new do |gem|
       ```
 
       Generating a single TypedArray
-      
+
       ```ruby
       things = TypedArray(Thing1,Thing2).new
 
