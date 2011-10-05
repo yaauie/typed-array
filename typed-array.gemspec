@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{typed-array}
-  s.version = "0.1.1"
+  s.version = "0.1.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = [%q{Ryan Biesemeyer}]
-  s.date = %q{2011-08-03}
+  s.date = %q{2011-09-06}
   s.description = %q{      All methods that alter the contents of an array that implements this Gem are first checked to
       ensure that the added items are of the types allowed. All methods behave exactly as their Array
       counterparts, including additional forms, block processing, etc.
@@ -26,7 +26,7 @@ Gem::Specification.new do |s|
       ```
 
       Generating a single TypedArray
-      
+
       ```ruby
       things = TypedArray(Thing1,Thing2).new
 
@@ -41,13 +41,11 @@ Gem::Specification.new do |s|
     ".document",
     ".rspec",
     "Gemfile",
-    "Gemfile.lock",
     "LICENSE.txt",
     "README.rdoc",
     "Rakefile",
     "VERSION",
     "lib/typed-array.rb",
-    "lib/typed-array/.DS_Store",
     "lib/typed-array/functions.rb",
     "spec/spec_helper.rb",
     "spec/typed-array_spec.rb",
@@ -63,21 +61,33 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_development_dependency(%q<rspec>, ["~> 2.3.0"])
-      s.add_development_dependency(%q<bundler>, ["~> 1.0.0"])
-      s.add_development_dependency(%q<jeweler>, ["~> 1.6.4"])
+      s.add_runtime_dependency(%q<typed-array>, [">= 0"])
       s.add_development_dependency(%q<rcov>, [">= 0"])
+      s.add_development_dependency(%q<bundler>, ["~> 1.0"])
+      s.add_development_dependency(%q<jeweler>, ["~> 1.6"])
+      s.add_development_dependency(%q<rcov>, [">= 0"])
+      s.add_development_dependency(%q<rdoc>, ["~> 3.9"])
+      s.add_development_dependency(%q<rspec>, ["~> 2.6"])
+      s.add_development_dependency(%q<rdoc>, ["~> 3.9"])
     else
-      s.add_dependency(%q<rspec>, ["~> 2.3.0"])
-      s.add_dependency(%q<bundler>, ["~> 1.0.0"])
-      s.add_dependency(%q<jeweler>, ["~> 1.6.4"])
+      s.add_dependency(%q<typed-array>, [">= 0"])
       s.add_dependency(%q<rcov>, [">= 0"])
+      s.add_dependency(%q<bundler>, ["~> 1.0"])
+      s.add_dependency(%q<jeweler>, ["~> 1.6"])
+      s.add_dependency(%q<rcov>, [">= 0"])
+      s.add_dependency(%q<rdoc>, ["~> 3.9"])
+      s.add_dependency(%q<rspec>, ["~> 2.6"])
+      s.add_dependency(%q<rdoc>, ["~> 3.9"])
     end
   else
-    s.add_dependency(%q<rspec>, ["~> 2.3.0"])
-    s.add_dependency(%q<bundler>, ["~> 1.0.0"])
-    s.add_dependency(%q<jeweler>, ["~> 1.6.4"])
+    s.add_dependency(%q<typed-array>, [">= 0"])
     s.add_dependency(%q<rcov>, [">= 0"])
+    s.add_dependency(%q<bundler>, ["~> 1.0"])
+    s.add_dependency(%q<jeweler>, ["~> 1.6"])
+    s.add_dependency(%q<rcov>, [">= 0"])
+    s.add_dependency(%q<rdoc>, ["~> 3.9"])
+    s.add_dependency(%q<rspec>, ["~> 2.6"])
+    s.add_dependency(%q<rdoc>, ["~> 3.9"])
   end
 end
 
