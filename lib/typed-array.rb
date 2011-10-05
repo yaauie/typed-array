@@ -8,9 +8,9 @@ module TypedArray
 
   # Hook the extension process in order to include the necessary functions
   # and do some basic sanity checks.
-  def self.extended( mod )
+  def self.extended(mod)
     unless mod <= Array
-      raise UnexpectedTypeException.new( [Array], mod.class )
+      raise UnexpectedTypeException.new([Array], mod.class)
     end
     mod.module_exec(self::Functions) do |functions_module|
       include functions_module
@@ -19,7 +19,7 @@ module TypedArray
 
   # when a class inherits from this one, make sure that it also inherits
   # the types that are being enforced
-  def inherited( subclass )
+  def inherited(subclass)
     self._subclasses << subclass
     subclass.restricted_types *restricted_types
   end
@@ -43,7 +43,7 @@ module TypedArray
     # Provide access to the types of objects expected and the class of the object received
     attr_reader :expected, :received
 
-    def initialize expected_one_of, received
+    def initialize(expected_one_of, received)
       @expected = expected_one_of
       @received = received
     end
@@ -52,19 +52,19 @@ module TypedArray
       %{Expected one of #{@expected.inspect} but received a(n) #{@received}}
     end
   end
-  
+
   protected
-    
+
   # a store of subclasses
   def _subclasses
     @_subclasses ||= []
   end
-    
+
 end
 
 # Provide a factory method. Takes any number of types to accept as arguments
 # and returns a class that behaves as a type-enforced array.
-def TypedArray *types_allowed
+def TypedArray(*types_allowed)
   klass = Class.new( Array )
   klass.class_exec(types_allowed) do |types_allowed|
     extend TypedArray

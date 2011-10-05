@@ -35,7 +35,7 @@ Jeweler::Tasks.new do |gem|
       ```
 
       Generating a single TypedArray
-      
+
       ```ruby
       things = TypedArray(Thing1,Thing2).new
 
@@ -43,7 +43,7 @@ Jeweler::Tasks.new do |gem|
     DESCRIPTION
   gem.email = "ruby-dev@yaauie.com"
   gem.authors = ["Ryan Biesemeyer"]
-  # dependencies defined in Gemfile
+  gem.add_development_dependency("rdoc", "~> 3.9")
 end
 Jeweler::RubygemsDotOrgTasks.new
 
@@ -60,7 +60,7 @@ end
 
 task :default => :spec
 
-require 'rake/rdoctask'
+require 'rdoc/task'
 Rake::RDocTask.new do |rdoc|
   version = File.exist?('VERSION') ? File.read('VERSION') : ""
 
